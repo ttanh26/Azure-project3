@@ -208,8 +208,6 @@ stages:
               script: |
                 sudo apt-get install jmeter -y
                 unzip -o "$(Build.BuildId)-jmeter.zip"
-                mkdir -p reports
-                jmeter -n -t EnduranceTest.jmx -l endurance-test-result.csv -e -f -o 
                 jmeter -n -t Starter.jmx -Jresdir=postid.csv -l log.csv -e -f -o ./reports/endurance-test 
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
