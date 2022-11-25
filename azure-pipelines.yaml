@@ -19,6 +19,7 @@ variables:
   # Environment name
   environmentName: 'test'
   storageAccount: 'storage334774487'
+  webAppName: 'azuredevops-proj3'
 
 stages:
 #--------------------------------------------#  
@@ -193,22 +194,13 @@ stages:
       runOnce:
         deploy:
           steps:
-          # - task: AzureWebApp@1
-          #   displayName: 'Deploy Azure Web App'
-          #   inputs:
-          #     azureSubscription:      # ToDo
-          #     appName: 'azuredevops-proj3'               # ToDo
-          #     appType: webApp
-          #     package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip 
-          - task: AzureRMWebAppDeployment@1
-            displayName: 'Deploy Azure WebApp'
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App'
             inputs:
-              ConnectedServiceName: 'azurerm-sc'
-              WebAppName: 'azuredevops-proj3'
-              appType: webAppLinux
-              Package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-              UseWebDeploy: true  # Argument aliases: enableCustomDeployment
-              deploymentMethod: zipDeploy      # ToDo: Use the published zip artifact. 
+              azureSubscription: $(azureServiceConnectionId)
+              appName: $(webAppName)
+              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+              appType: 'webAppLinux'
           #--------------------------------------------#    
           # Run JMeter test suite against the App Service
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
