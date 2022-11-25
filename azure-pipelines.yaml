@@ -101,6 +101,7 @@ stages:
       displayName: Install Newman
       inputs:
         script: |
+          whereis node
           nvm -v
           sudo npm install -g newman
           sudo npm install newman-reporter-junitfull -g
