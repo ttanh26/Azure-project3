@@ -19,7 +19,7 @@ variables:
   # Environment name
   environmentName: 'test'
   storageAccount: 'storage334774487'
-  webAppName: 'myApplication-AppService-334774487'
+  webAppName: 'yinyang-AppService-334774487'
 
 stages:
 #--------------------------------------------#  
