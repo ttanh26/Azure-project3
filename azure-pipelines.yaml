@@ -101,11 +101,8 @@ stages:
       displayName: Install Newman
       inputs:
         script: |
-          export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-          sudo nvm use 16
-          sudo npm install -g newman
-          sudo npm install newman-reporter-junitfull -g
+          npm install -g newman
+          npm install newman-reporter-junitfull -g
         workingDirectory: $(System.DefaultWorkingDirectory)
     # Postman Data Validation Test Suite    
     # ToDo: Verify the working directory and the newman scripts
