@@ -207,8 +207,10 @@ stages:
             inputs:
               script: |
                 sudo apt-get install jmeter -y
-                unzip "$(Build.BuildId)-jmeter.zip"
-                jmeter -n -t Starter.jmx -Jresdir=automatedtesting/jmeter/postid.csv -l log.csv -e -f -o test_output 
+                unzip -o "$(Build.BuildId)-jmeter.zip"
+                mkdir -p reports
+                jmeter -n -t EnduranceTest.jmx -l endurance-test-result.csv -e -f -o 
+                jmeter -n -t Starter.jmx -Jresdir=postid.csv -l log.csv -e -f -o ./reports/endurance-test 
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
   #--------------------------------------------#  
@@ -246,7 +248,7 @@ stages:
                 export PATH=$PATH:/path/to/chromedriver     
                 
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
-                unzip "$(Build.BuildId)-uitests.zip"
+                unzip -o "$(Build.BuildId)-uitests.zip"
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 mkdir -p ~/vmlogs
                 unbuffer python3 login.py | tee -a ~/vmlogs/log.txt
