@@ -101,8 +101,9 @@ stages:
       displayName: Install Newman
       inputs:
         script: |
-          npm install -g newman
-          npm install newman-reporter-junitfull -g
+          nvm -v
+          sudo npm install -g newman
+          sudo npm install newman-reporter-junitfull -g
         workingDirectory: $(System.DefaultWorkingDirectory)
     # Postman Data Validation Test Suite    
     # ToDo: Verify the working directory and the newman scripts
