@@ -186,30 +186,30 @@ stages:
   #--------------------------------------------#  
   # Deploy FakeRestAPI Web App
   # ToDo: Provide <environment name> you created in your DevOps project
-  - deployment: FakeRestAPI
-    environment: '$(environmentName)'   # ToDo
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              appName: $(webAppName)
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-              appType: 'webAppLinux'
-          #--------------------------------------------#    
-          # Run JMeter test suite against the App Service
-          # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
-          # ToDo: Generate the log file. 
-          - task: CmdLine@2
-            inputs:
-              script: |
-                sudo apt install jmeter
-                unzip "$(Build.BuildId)-jmeter.zip"
-                jmeter -n -t Starter.jmx -Jresdir=automatedtesting/jmeter/postid.csv -l log.csv -e -f -o test_output 
-              workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
+  # - deployment: FakeRestAPI
+  #   environment: '$(environmentName)'   # ToDo
+  #   strategy:
+  #     runOnce:
+  #       deploy:
+  #         steps:
+  #         - task: AzureWebApp@1
+  #           displayName: 'Deploy Azure Web App'
+  #           inputs:
+  #             azureSubscription: $(azureServiceConnectionId)
+  #             appName: $(webAppName)
+  #             package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+  #             appType: 'webAppLinux'
+  #         #--------------------------------------------#    
+  #         # Run JMeter test suite against the App Service
+  #         # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
+  #         # ToDo: Generate the log file. 
+  #         - task: CmdLine@2
+  #           inputs:
+  #             script: |
+  #               sudo apt install jmeter
+  #               unzip "$(Build.BuildId)-jmeter.zip"
+  #               jmeter -n -t Starter.jmx -Jresdir=automatedtesting/jmeter/postid.csv -l log.csv -e -f -o test_output 
+  #             workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
   #--------------------------------------------#  
   # Selenium | Functional UI Tests
@@ -240,16 +240,17 @@ stages:
                 sudo apt -f install
                 sudo rm /var/cache/apt/archives/chromium*
                 sudo apt-get install -y chromium-browser
-                pip3 install selenium
+                pip --version
+                # pip3 install selenium
                 
-                #  ToDo: Add chromedriver executable to path
-                export PATH=$PATH:/path/to/chromedriver     
+                # #  ToDo: Add chromedriver executable to path
+                # export PATH=$PATH:/path/to/chromedriver     
                 
-                # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
-                unzip "$(Build.BuildId)-uitests.zip"
-                python3 login.py
-                # ToDo: Direct the output of the Selenium Test Suite to a log file
-                mkdir -p ~/vmlogs
-                unbuffer python3 login.py | tee -a ~/vmlogs/log.txt
+                # # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
+                # unzip "$(Build.BuildId)-uitests.zip"
+                # python3 login.py
+                # # ToDo: Direct the output of the Selenium Test Suite to a log file
+                # mkdir -p ~/vmlogs
+                # unbuffer python3 login.py | tee -a ~/vmlogs/log.txt
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
                 
