@@ -236,7 +236,6 @@ stages:
                 
                 sudo apt-get upgrade -y
                 sudo apt-get install python3.7 -y
-                sudo apt-get install python3.7-venv -y
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
                 sudo apt-get -f install
