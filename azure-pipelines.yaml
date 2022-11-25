@@ -240,7 +240,7 @@ stages:
                 sudo apt -f install
                 sudo rm /var/cache/apt/archives/chromium*
                 sudo apt-get install -y chromium-browser
-                pip --version
+                pip3 --version
                 # pip3 install selenium
                 
                 # #  ToDo: Add chromedriver executable to path
