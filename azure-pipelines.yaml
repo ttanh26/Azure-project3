@@ -101,7 +101,8 @@ stages:
       displayName: Install Newman
       inputs:
         script: |
-          nvm use 16
+          wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+          sudo nvm use 16
           sudo npm install -g newman
           sudo npm install newman-reporter-junitfull -g
         workingDirectory: $(System.DefaultWorkingDirectory)
