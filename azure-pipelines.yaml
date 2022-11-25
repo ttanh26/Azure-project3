@@ -206,7 +206,7 @@ stages:
           - task: CmdLine@2
             inputs:
               script: |
-                sudo apt install jmeter
+                sudo apt-get install jmeter -y
                 unzip "$(Build.BuildId)-jmeter.zip"
                 jmeter -n -t Starter.jmx -Jresdir=automatedtesting/jmeter/postid.csv -l log.csv -e -f -o test_output 
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
@@ -232,7 +232,7 @@ stages:
               targetType: 'inline'
               script: |           
                 # ToDo: Install Selenium, Chromium-browser & Chromedriver, if not already in the custom VM image. 
-                #! /bin/bash
+                # ! /bin/bash
                 
                 sudo apt-get upgrade -y
                 sudo apt-get update -y
@@ -247,7 +247,6 @@ stages:
                 
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 unzip "$(Build.BuildId)-uitests.zip"
-                python3 login.py
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 mkdir -p ~/vmlogs
                 unbuffer python3 login.py | tee -a ~/vmlogs/log.txt
