@@ -187,8 +187,6 @@ stages:
   # Deploy FakeRestAPI Web App
   # ToDo: Provide <environment name> you created in your DevOps project
   - deployment: FakeRestAPI
-    pool:
-      vmImage: 'Ubuntu-18.04'      
     environment: '$(environmentName)'   # ToDo
     strategy:
       runOnce:
@@ -247,9 +245,9 @@ stages:
                 
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 unzip "$(Build.BuildId)-uitests.zip"
-                python3 selenium/login.py
+                python3 login.py
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 mkdir -p ~/vmlogs
-                unbuffer python3 selenium/login.py | tee -a ~/vmlogs/log.txt
+                unbuffer python3 login.py | tee -a ~/vmlogs/log.txt
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
                 
