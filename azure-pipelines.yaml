@@ -11,7 +11,7 @@ trigger:
 pool: myAgentPool
 
 variables:
-  python.version: '3.7.6'
+  python.version: '3.7'
   # ToDo: Replace the service connection name as used in the DevOps project settings
   azureServiceConnectionId: 'myserviceconnection'
   # Project root folder. Point to the folder containing manage.py file.
@@ -19,7 +19,7 @@ variables:
   # Environment name
   environmentName: 'test'
   storageAccount: 'storage334774487'
-  webAppName: 'azuredevops-proj3'
+  webAppName: 'myApplication-AppService-334774487'
 
 stages:
 #--------------------------------------------#  
@@ -238,7 +238,7 @@ stages:
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
-                pip install selenium
+                pip3 install selenium
                 
                 #  ToDo: Add chromedriver executable to path
                 export PATH=$PATH:/path/to/chromedriver     
