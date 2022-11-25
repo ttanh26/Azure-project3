@@ -107,8 +107,8 @@ stages:
           sudo npm install -g newman
           sudo npm install newman-reporter-junitfull -g
         workingDirectory: $(System.DefaultWorkingDirectory)
-    # Postman Data Validation Test Suite    
-    # ToDo: Verify the working directory and the newman scripts
+    # # Postman Data Validation Test Suite    
+    # # ToDo: Verify the working directory and the newman scripts
     - task: CmdLine@2
       displayName: Run Data Validation Tests
       continueOnError: true
@@ -186,30 +186,31 @@ stages:
   #--------------------------------------------#  
   # Deploy FakeRestAPI Web App
   # ToDo: Provide <environment name> you created in your DevOps project
-  # - deployment: FakeRestAPI
-  #   environment: '$(environmentName)'   # ToDo
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - task: AzureWebApp@1
-  #           displayName: 'Deploy Azure Web App'
-  #           inputs:
-  #             azureSubscription: $(azureServiceConnectionId)
-  #             appName: $(webAppName)
-  #             package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  #             appType: 'webAppLinux'
-  #         #--------------------------------------------#    
-  #         # Run JMeter test suite against the App Service
-  #         # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
-  #         # ToDo: Generate the log file. 
-  #         - task: CmdLine@2
-  #           inputs:
-  #             script: |
-  #               sudo apt install jmeter
-  #               unzip "$(Build.BuildId)-jmeter.zip"
-  #               jmeter -n -t Starter.jmx -Jresdir=automatedtesting/jmeter/postid.csv -l log.csv -e -f -o test_output 
-  #             workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
+  - deployment: FakeRestAPI
+    environment: '$(environmentName)'   # ToDo
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App'
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              appName: $(webAppName)
+              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+              appType: 'webAppLinux'
+          #--------------------------------------------#    
+          # Run JMeter test suite against the App Service
+          # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
+          # ToDo: Generate the log file. 
+          - task: CmdLine@2
+            inputs:
+              script: |
+                wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
+                unzip -o apache-jmeter-5.4.3.zip 
+                unzip -o "$(Build.BuildId)-jmeter.zip"
+                apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx -Jresdir=postid.csv -l log.csv -e -f -o ./reports/endurance-test 
+              workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
   #--------------------------------------------#  
   # Selenium | Functional UI Tests
@@ -232,25 +233,23 @@ stages:
               targetType: 'inline'
               script: |           
                 # ToDo: Install Selenium, Chromium-browser & Chromedriver, if not already in the custom VM image. 
-                #! /bin/bash
+                # ! /bin/bash
                 
                 sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
+                sudo apt-get update -y
+                sudo apt-get install python3.7 -y
+                sudo apt-get install -y python3-pip
                 sudo apt-get install unzip -y
-                sudo apt -f install
-                sudo rm /var/cache/apt/archives/chromium*
                 sudo apt-get install -y chromium-browser
-                pip --version
-                # pip3 install selenium
+                pip3 install selenium
                 
                 # #  ToDo: Add chromedriver executable to path
-                # export PATH=$PATH:/path/to/chromedriver     
+                export PATH=$PATH:/path/to/driver/chrome-driver   
                 
-                # # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
-                # unzip "$(Build.BuildId)-uitests.zip"
-                # python3 login.py
-                # # ToDo: Direct the output of the Selenium Test Suite to a log file
-                # mkdir -p ~/vmlogs
-                # unbuffer python3 login.py | tee -a ~/vmlogs/log.txt
+                # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
+                unzip -o "$(Build.BuildId)-uitests.zip"
+                # ToDo: Direct the output of the Selenium Test Suite to a log file
+                mkdir -p ~/vmlogs
+                python3 login.py > ~/vmlogs/log.txt
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
                 
