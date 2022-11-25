@@ -206,11 +206,10 @@ stages:
           - task: CmdLine@2
             inputs:
               script: |
-                wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.3.zip
-                unzip apache-jmeter-5.3.zip -o
+                wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
+                unzip apache-jmeter-5.4.3.zip -o
                 unzip -o "$(Build.BuildId)-jmeter.zip"
-                jmeter --help
-                apache-jmeter-5.3/bin/jmeter -n -t Starter.jmx -Jresdir=postid.csv -l log.csv -e -f -o ./reports/endurance-test 
+                apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx -Jresdir=postid.csv -l log.csv -e -f -o ./reports/endurance-test 
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
   #--------------------------------------------#  
