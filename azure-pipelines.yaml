@@ -98,40 +98,40 @@ stages:
 #--------------------------------------------#    
     # Postman - Install Newman    
     # ToDo: Update the command and verify the working directory
-    - task: CmdLine@2
-      displayName: Install Newman
-      inputs:
-        script: |
-          curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
-          sudo apt-get install -y nodejs
-          sudo npm install -g newman
-          sudo npm install newman-reporter-junitfull -g
-        workingDirectory: $(System.DefaultWorkingDirectory)
-    # Postman Data Validation Test Suite    
-    # ToDo: Verify the working directory and the newman scripts
-    - task: CmdLine@2
-      displayName: Run Data Validation Tests
-      continueOnError: true
-      inputs:
-        script: 'newman run DataValidationTest.postman_collection.json -e DummyRestAPIEnv.postman_environment.json -r cli,junitfull --reporter-junitfull-export JUnitReport-data-validation.xml'          # ToDo: Write your commands
-        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-    # Postman Regression Test Suite    
-    # ToDo: Update the command and verify the working directory
-    - task: CmdLine@2
-      displayName: Run Regression Tests
-      continueOnError: true
-      inputs:
-        script: 'newman run RegressionTest.postman_collection.json -e DummyRestAPIEnv.postman_environment.json -r cli,junitfull --reporter-junitfull-export JUnitReport-regression.xml'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-    # Postman - Publish Results 
-    # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/JUnitReport-*.xml'
-        searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'      # ToDo
-        mergeTestResults: true
-        testRunTitle: 'Publish postman test result'      # ToDo
+    # - task: CmdLine@2
+    #   displayName: Install Newman
+    #   inputs:
+    #     script: |
+    #       curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
+    #       sudo apt-get install -y nodejs
+    #       sudo npm install -g newman
+    #       sudo npm install newman-reporter-junitfull -g
+    #     workingDirectory: $(System.DefaultWorkingDirectory)
+    # # Postman Data Validation Test Suite    
+    # # ToDo: Verify the working directory and the newman scripts
+    # - task: CmdLine@2
+    #   displayName: Run Data Validation Tests
+    #   continueOnError: true
+    #   inputs:
+    #     script: 'newman run DataValidationTest.postman_collection.json -e DummyRestAPIEnv.postman_environment.json -r cli,junitfull --reporter-junitfull-export JUnitReport-data-validation.xml'          # ToDo: Write your commands
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+    # # Postman Regression Test Suite    
+    # # ToDo: Update the command and verify the working directory
+    # - task: CmdLine@2
+    #   displayName: Run Regression Tests
+    #   continueOnError: true
+    #   inputs:
+    #     script: 'newman run RegressionTest.postman_collection.json -e DummyRestAPIEnv.postman_environment.json -r cli,junitfull --reporter-junitfull-export JUnitReport-regression.xml'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+    # # Postman - Publish Results 
+    # # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
+    # - task: PublishTestResults@2
+    #   inputs:
+    #     testResultsFormat: 'JUnit'
+    #     testResultsFiles: '**/JUnitReport-*.xml'
+    #     searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'      # ToDo
+    #     mergeTestResults: true
+    #     testRunTitle: 'Publish postman test result'      # ToDo
 
     #--------------------------------------------#
     # Selenium (UI) Test Suite - Archive the package  
@@ -151,32 +151,32 @@ stages:
     #--------------------------------------------#    
     # FakeRestAPI - Archive
     # ToDo: Complete the ArchiveFiles@2 task and publish step 
-    - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    # FakeRestAPI - Publish    
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
-      artifact: drop-fakerestapi
+    # - task: ArchiveFiles@2
+    #   displayName: 'Archive FakeRestAPI'
+    #   inputs:
+    #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
+    #     includeRootFolder: false
+    #     archiveType: 'zip'
+    #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    # # FakeRestAPI - Publish    
+    # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+    #   displayName: 'Upload Package'
+    #   artifact: drop-fakerestapi
 
     #--------------------------------------------#  
     # JMeter (Performance) Test Suite - Archive
     # ToDo: Complete the ArchiveFiles@2 task and publish step 
-    - task: ArchiveFiles@2
-      displayName: 'Archive PerformanceTestSuite'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter.zip'
-    # JMeter Test Suite - Publish    
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter.zip
-      displayName: 'Upload Package'
-      artifact: drop-jmeter
+    # - task: ArchiveFiles@2
+    #   displayName: 'Archive PerformanceTestSuite'
+    #   inputs:
+    #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+    #     includeRootFolder: false
+    #     archiveType: 'zip'
+    #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter.zip'
+    # # JMeter Test Suite - Publish    
+    # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter.zip
+    #   displayName: 'Upload Package'
+    #   artifact: drop-jmeter
 
 #--------------------------------------------#  
 # DEPLOYMENT STAGE
@@ -235,9 +235,11 @@ stages:
                 #! /bin/bash
                 
                 sudo apt-get upgrade -y
+                sudo apt install python3.7
+                sudo apt-get install python3.7-venv
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
-                sudo apt -f install
+                sudo apt-get -f install
                 sudo rm /var/cache/apt/archives/chromium*
                 sudo apt-get install -y chromium-browser
                 pip3 --version
