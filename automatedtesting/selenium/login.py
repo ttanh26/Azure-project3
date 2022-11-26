@@ -29,7 +29,6 @@ def login (user, password):
     c = 0 
     for item in product_list:
         item_name = item.find_element(By.CSS_SELECTOR, "div[class=inventory_item_label] > a > div[class=inventory_item_name]").get_attribute('innerHTML')
-        print(item_name)
         print(_get_timestamp(), f'Adding new {item_name} to cart!')
         item.find_element(By.CSS_SELECTOR, "button[class='btn btn_primary btn_small btn_inventory']").click()
         c += 1
