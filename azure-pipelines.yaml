@@ -261,8 +261,8 @@ stages:
                 python3 login.py > selenium_logs/log.txt
 
                 # Copy selenium logs to system working directory:
-                sudo mkdir -p var/log/selenium
-                sudo cp $(Pipeline.Workspace)/drop-uitests/selenium_logs/log.txt var/log/selenium/selenium-test.txt
+                sudo mkdir -p /var/log/selenium
+                sudo cp $(Pipeline.Workspace)/drop-uitests/selenium_logs/log.txt /var/log/selenium/selenium-test.txt
 
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
           - task: PublishPipelineArtifact@1
