@@ -11,11 +11,12 @@ def _get_timestamp():
 
 # Start the browser and login with standard_user
 def login (user, password):
-    print ('Starting the browser...')
+    print (_get_timestamp(), 'Starting the browser...')
     # --uncomment when running in Azure DevOps.
     options = ChromeOptions()
-    options.add_argument("--headless") 
+    # options.add_argument("--headless") 
     driver = webdriver.Chrome(options=options)
+    # driver = webdriver.Chrome()
     print (_get_timestamp(), 'Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
 
@@ -27,7 +28,7 @@ def login (user, password):
     product_list = driver.find_elements(By.CSS_SELECTOR, "div[class=inventory_item] > div.inventory_item_description > div.pricebar > button")
     c = 0 
     for item in product_list:
-        print('Adding new item to cart!')
+        print(_get_timestamp(), 'Adding new item to cart!')
         item.click()
         c += 1
 
