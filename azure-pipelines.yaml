@@ -252,7 +252,7 @@ stages:
                 pip3 install selenium
                 
                 #  ToDo: Add chromedriver executable to path
-                export PATH=$PATH:/usr/bin/chromium-browser/
+                export PATH=$PATH:/usr/bin/chromium-browser/chromedriver
                 
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 unzip -o "$(Build.BuildId)-uitests.zip"
