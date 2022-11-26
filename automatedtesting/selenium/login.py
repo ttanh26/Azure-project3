@@ -25,22 +25,25 @@ def login (user, password):
     driver.find_element(By.ID, 'login-button').click()
 
     print(_get_timestamp(), f'Login with username {user} and password {password}')
-    product_list = driver.find_elements(By.CSS_SELECTOR, "div[class=inventory_item] > div.inventory_item_description > div.pricebar > button")
+    product_list = driver.find_elements(By.CSS_SELECTOR, "div[class=inventory_item] > div.inventory_item_description")
     c = 0 
     for item in product_list:
-        print(_get_timestamp(), 'Adding new item to cart!')
-        item.click()
+        item_name = item.find_element(By.CSS_SELECTOR, "div[class=inventory_item_label] > a > div[class=inventory_item_name]").get_attribute('innerHTML')
+        print(item_name)
+        print(_get_timestamp(), f'Adding new {item_name} to cart!')
+        item.find_element(By.CSS_SELECTOR, "button[class='btn btn_primary btn_small btn_inventory']").click()
         c += 1
 
     print(_get_timestamp(), f"There are {c} items added to cart!")
 
     print(_get_timestamp(), 'Removing items from cart!')
     
-    product_list = driver.find_elements(By.CSS_SELECTOR, "div[class=inventory_item] > div.inventory_item_description > div.pricebar > button[class='btn btn_secondary btn_small btn_inventory']")
+    product_list = driver.find_elements(By.CSS_SELECTOR, "div[class=inventory_item] > div.inventory_item_description")
     c = 0 
     for item in product_list:
-        print(_get_timestamp(), 'Removing an item from cart!')
-        item.click()
+        item_name = item.find_element(By.CSS_SELECTOR, "div[class=inventory_item_label] > a > div[class=inventory_item_name]").get_attribute('innerHTML')
+        print(_get_timestamp(), f'Removing {item_name} from cart!')
+        item.find_element(By.CSS_SELECTOR, "button[class='btn btn_secondary btn_small btn_inventory']").click()
         c += 1
 
     print(_get_timestamp(), f'There are {c} items removed from cart!')
