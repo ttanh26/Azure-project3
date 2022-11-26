@@ -215,7 +215,7 @@ stages:
                 apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx \
                                               -Jresdir=postid.csv \
                                               -l jmeter_logs/log.jtl \
-                                              -e -f -o jmeter_logs/jemter-test-reports \
+                                              -e -f -o jmeter_logs/jmeter-test-reports \
                                               -j jmeter_log/jmeter-test.log
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
@@ -261,13 +261,12 @@ stages:
                 python3 login.py > selenium_logs/log.txt
 
                 # Copy selenium logs to system working directory:
-                mkdir -p log/selenium
-                pwd
-                sudo cp selenium_logs/log.txt log/selenium/selenium-test.txt
+                sudo mkdir -p var/log/selenium
+                sudo cp $(Pipeline.Workspace)/drop-uitests/selenium_logs/log.txt var/log/selenium/selenium-test.txt
 
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
           - task: PublishPipelineArtifact@1
             displayName: Publish selenium logs
             inputs:
-              targetPath: '$(Pipeline.Workspace)/drop-uitests/log/selenium/selenium-test.txt'
+              targetPath: '$(Pipeline.Workspace)/drop-uitests/selenium_logs/log.txt'
               artifactName: 'drop-selenium-logs'
