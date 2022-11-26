@@ -257,6 +257,6 @@ stages:
                 unzip -o "$(Build.BuildId)-uitests.zip"
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 mkdir -p selenium_logs
-                python3 login.py > ~/selenium_logs/log.txt
+                python3 login.py > selenium_logs/log.txt
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
                 
