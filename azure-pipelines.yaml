@@ -222,7 +222,7 @@ stages:
                                               -Jresdir=postid.csv \
                                               -l jmeter_logs/log.jtl \
                                               -e -f -o jmeter_logs/jmeter-endurance-test-reports \
-                                              -j jmeter_log/jmeter-endurance-test.log
+                                              -j jmeter_logs/jmeter-endurance-test.log
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter     
           - task: CmdLine@2
             displayName: 'Run Stress Test'
@@ -234,7 +234,7 @@ stages:
                                               -e -f -o jmeter_logs/jmeter-stress-test-reports \
                                               -j jmeter_logs/jmeter-stress-test.log
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter
-              
+
           - task: ArchiveFiles@2
             displayName: 'Archive StressTestReport'
             inputs:
