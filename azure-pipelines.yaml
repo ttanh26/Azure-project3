@@ -251,7 +251,7 @@ stages:
               archiveFile: '$(Deploy.ArtifactStagingDirectory)/jmeter-logs/$(Build.BuildId)-endurance-test.zip'
           # JMeter Test Suite - Publish    
           - publish: '$(Deploy.ArtifactStagingDirectory)/jmeter-logs'
-            displayName: 'Publish JMeter stress test HTML report'
+            displayName: 'Publish JMeter HTML report'
             artifact: 'drop-jmeter-logs'
 
 
