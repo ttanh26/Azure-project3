@@ -152,13 +152,13 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">D:\Code\Projects\Azure\cd1807-Project-Ensuring-Quality-Releases\automatedtesting\jmeter\stress_test_result.csv</stringProp>
+          <stringProp name="filename">stress_test_result.csv</stringProp>
         </ResultCollector>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">D:/Code/Projects/Azure/cd1807-Project-Ensuring-Quality-Releases/automatedtesting/jmeter/postid.csv</stringProp>
+          <stringProp name="filename">postid.csv</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
@@ -243,7 +243,7 @@
         </ResultCollector>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-          <stringProp name="filename">D:/Code/Projects/Azure/cd1807-Project-Ensuring-Quality-Releases/automatedtesting/jmeter/postid.csv</stringProp>
+          <stringProp name="filename">postid.csv</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">activityID</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
@@ -334,7 +334,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">D:\Code\Projects\Azure\cd1807-Project-Ensuring-Quality-Releases\automatedtesting\jmeter\endurance_test_result.csv</stringProp>
+          <stringProp name="filename">endurance_test_result.csv</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
