@@ -54,11 +54,11 @@ module "publicip" {
 }
 
 module "vm" {
-  source = "../../modules/vm"
-  location = var.location
+  source           = "../../modules/vm"
+  location         = var.location
   application_type = var.application_type
-  resource_type = "vm"
-  resource_group = var.resource_group_name
-  subnet_id = module.network.subnet_id_test
-  public_ip = module.publicip.public_ip_address_id
+  resource_type    = "vm"
+  resource_group   = var.resource_group_name
+  subnet_id        = module.network.subnet_id_test
+  public_ip        = module.publicip.public_ip_address_id
 }
