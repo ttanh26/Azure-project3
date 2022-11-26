@@ -249,9 +249,10 @@ stages:
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
+                which chromium-browser
                 
                 #  ToDo: Add chromedriver executable to path
-                export PATH=$PATH:/path/to/chromedriver
+                export PATH=$PATH:/usr/bin/chromium-browser
                 
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 unzip -o "$(Build.BuildId)-uitests.zip"
