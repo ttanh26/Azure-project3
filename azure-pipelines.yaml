@@ -266,7 +266,7 @@ stages:
                 sudo cp selenium_logs/log.txt log/selenium/selenium-test.txt
 
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
-          - task: PublishPipelineArtifact@4
+          - task: PublishPipelineArtifact@1
             displayName: Publish selenium logs
             inputs:
               targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.txt'
