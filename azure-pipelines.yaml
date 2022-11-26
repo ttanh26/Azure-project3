@@ -234,9 +234,11 @@ stages:
         deploy:
           steps:
           - download: current
+            displayName: 'Get UI Test artifact'
             artifact: drop-uitests     # ToDo: Change/provide a name
             
           - task: Bash@3
+            displayName: 'Executing Selenium tests'
             inputs:
               targetType: 'inline'
               script: |           
