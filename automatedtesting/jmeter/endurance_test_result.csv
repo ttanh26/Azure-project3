@@ -1,1 +1,7 @@
-
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1669467080466,1068,GET All Activities,200,OK,Endurance Test 2-2,text,true,,3109,165,2,4,https://yinyang-appservice-334774487.azurewebsites.net/api/Activities,1068,0,793
+1669467080021,1518,GET All Activities,200,OK,Endurance Test 2-1,text,true,,3109,165,2,4,https://yinyang-appservice-334774487.azurewebsites.net/api/Activities,1499,0,1224
+1669467081535,262,Get Activity by ID,200,OK,Endurance Test 2-2,text,true,,351,170,2,3,https://yinyang-appservice-334774487.azurewebsites.net/api/Activities?id=4,262,0,0
+1669467081553,265,Get Activity by ID,200,OK,Endurance Test 2-1,text,true,,351,170,2,2,https://yinyang-appservice-334774487.azurewebsites.net/api/Activities?id=1,265,0,0
+1669467081797,265,POST Activity,200,OK,Endurance Test 2-2,text,true,,262,249,2,2,https://yinyang-appservice-334774487.azurewebsites.net/api/Activities,265,0,0
+1669467081819,266,POST Activity,200,OK,Endurance Test 2-1,text,true,,262,249,1,1,https://yinyang-appservice-334774487.azurewebsites.net/api/Activities,266,0,0

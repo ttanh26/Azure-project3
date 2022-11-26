@@ -25,3 +25,5 @@ override.tf.json
 **/.terraform*
 .terraform*
 **/selenium_logs*
+**/jmeter_logs*
+**/apache-jmeter-5.5*

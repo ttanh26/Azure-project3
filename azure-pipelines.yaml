@@ -212,10 +212,10 @@ stages:
                 unzip -o apache-jmeter-5.4.3.zip 
                 unzip -o "$(Build.BuildId)-jmeter.zip"
                 mkdir -p jmeter_logs
-                apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx 
-                                              -Jresdir=postid.csv 
-                                              -l jmeter_logs/log.jtl
-                                              -e -f -o jmeter_logs/jemter-test-reports
+                apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx \
+                                              -Jresdir=postid.csv \
+                                              -l jmeter_logs/log.jtl \
+                                              -e -f -o jmeter_logs/jemter-test-reports \
                                               -j jmeter_log/jmeter-test.log
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
@@ -269,5 +269,5 @@ stages:
           - task: PublishPipelineArtifact@1
             displayName: Publish selenium logs
             inputs:
-              targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.txt'
+              targetPath: '$(Pipeline.Workspace)/drop-uitests/log/selenium/selenium-test.txt'
               artifactName: 'drop-selenium-logs'
