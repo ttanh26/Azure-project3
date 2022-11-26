@@ -211,7 +211,12 @@ stages:
                 wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
                 unzip -o apache-jmeter-5.4.3.zip 
                 unzip -o "$(Build.BuildId)-jmeter.zip"
-                apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx -Jresdir=postid.csv -l log.csv -e -f -o ./reports/endurance-test 
+                mkdir -p jmeter_logs
+                apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx 
+                                              -Jresdir=postid.csv 
+                                              -l jmeter_logs/log.jtl
+                                              -e -f -o jmeter_logs/jemter-test-reports
+                                              -j jmeter_log/jmeter-test.log
               workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
               
   #--------------------------------------------#  
@@ -251,7 +256,7 @@ stages:
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 unzip -o "$(Build.BuildId)-uitests.zip"
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
-                mkdir -p ~/vmlogs
-                python3 login.py > ~/vmlogs/log.txt
+                mkdir -p selenium_logs
+                python3 login.py > ~/selenium_logs/log.txt
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
                 
