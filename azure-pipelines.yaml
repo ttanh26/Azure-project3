@@ -204,7 +204,7 @@ stages:
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
           # ToDo: Generate the log file. 
           - task: CmdLine@2
-            displayName: 'Performance Testing with JMeter'
+            displayName: 'Install JMeter'
             inputs:
               script: |
                 sudo apt-get install openjdk-11-jre-headless -y
@@ -213,13 +213,28 @@ stages:
                 unzip -o apache-jmeter-5.4.3.zip 
                 unzip -o "$(Build.BuildId)-jmeter.zip"
                 mkdir -p jmeter_logs
-                apache-jmeter-5.4.3/bin/jmeter -n -t Starter.jmx \
+              workingDirectory: $(Pipeline.Workspace)/drop-jmeter     
+          - task: CmdLine@2
+            displayName: 'Run Endurance Test'
+            inputs:
+              script: |
+                apache-jmeter-5.4.3/bin/jmeter -n -t endurance_test.jmx \
                                               -Jresdir=postid.csv \
                                               -l jmeter_logs/log.jtl \
                                               -e -f -o jmeter_logs/jmeter-test-reports \
-                                              -j jmeter_log/jmeter-test.log
-              workingDirectory: $(Pipeline.Workspace)/drop-jmeter            # ToDo: Use the artifact name from the task above
-              
+                                              -j jmeter_log/jmeter-endurance-test.log
+              workingDirectory: $(Pipeline.Workspace)/drop-jmeter     
+          - task: CmdLine@2
+            displayName: 'Run Stress Test'
+            inputs:
+              script: |
+                apache-jmeter-5.4.3/bin/jmeter -n -t stress_test.jmx \
+                                              -Jresdir=postid.csv \
+                                              -l jmeter_logs/log.jtl \
+                                              -e -f -o jmeter_logs/jmeter-test-reports \
+                                              -j jmeter_log/jmeter-stress-test.log
+              workingDirectory: $(Pipeline.Workspace)/drop-jmeter     
+
   #--------------------------------------------#  
   # Selenium | Functional UI Tests
   # ToDo: 
