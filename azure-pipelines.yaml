@@ -206,6 +206,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: |
+                sudo apt-get install openjdk-11-jre-headless -y
+                java -version
                 wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
                 unzip -o apache-jmeter-5.4.3.zip 
                 unzip -o "$(Build.BuildId)-jmeter.zip"
