@@ -259,5 +259,15 @@ stages:
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 mkdir -p selenium_logs
                 python3 login.py > selenium_logs/log.txt
+
+                # Copy selenium logs to system working directory:
+                mkdir -p log/selenium
+                pwd
+                sudo cp selenium_logs/log.txt log/selenium/selenium-test.txt
+
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
-                
+          - task: PublishPipelineArtifact@4
+            displayName: Publish selenium logs
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.txt'
+              artifactName: 'drop-selenium-logs'
