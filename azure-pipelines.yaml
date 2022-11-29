@@ -296,7 +296,7 @@ stages:
                 unzip -o "$(Build.BuildId)-uitests.zip"
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 sudo mkdir -p /var/log/selenium
-                sudo chmod 755 /var/log/selenium/
+                sudo chmod 776 /var/log/selenium/
                 python3 login.py >> /var/log/selenium/log.txt
 
 
