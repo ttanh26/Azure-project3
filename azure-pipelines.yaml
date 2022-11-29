@@ -296,9 +296,8 @@ stages:
                 unzip -o "$(Build.BuildId)-uitests.zip"
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 sudo mkdir -p /var/log/selenium
-                sudo chmod 776 /var/log/selenium/
-                python3 login.py >> /var/log/selenium/log.txt
-
+                sudo chmod 664 /var/log/selenium
+                python3 login.py 2>&1 | sudo tee -a /var/log/selenium/log.txt
 
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
           - task: PublishPipelineArtifact@1
