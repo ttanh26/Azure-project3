@@ -300,8 +300,3 @@ stages:
                 python3 login.py 2>&1 | sudo tee -a /var/log/selenium/log.txt
 
               workingDirectory: $(Pipeline.Workspace)/drop-uitests
-          - task: PublishPipelineArtifact@1
-            displayName: Publish selenium logs
-            inputs:
-              targetPath: '$(System.DefaultWorkingDirectory)/var/log/selenium/log.txt'
-              artifactName: 'drop-selenium-logs'
