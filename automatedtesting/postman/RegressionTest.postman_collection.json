@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Get All Employees",
+			"name": "List Users",
 			"event": [
 				{
 					"listen": "test",
@@ -16,9 +16,7 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Success response\", function (){\r",
-							"    pm.expect(pm.response.text()).to.include(\"success\")\r",
-							"})"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -28,32 +26,34 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/employees",
+					"raw": "{{url}}/users?page={{page_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"employees"
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page_id}}"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Create Employee",
+			"name": "Create Users",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
 							"});\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"var json = pm.response.json();\r",
-							"pm.environment.set(\"id\", json.data.id);"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -64,7 +64,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"salary\": \"{{salary}}\",\r\n    \"age\": \"{{age}}\"\r\n}",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,12 +72,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/create",
+					"raw": "{{url}}/users",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"create"
+						"users"
 					]
 				}
 			},
@@ -93,10 +93,7 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"\r",
-							"pm.test(\"Successful response\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"success\");\r",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -107,7 +104,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"{{update_name}}\",\r\n    \"salary\": \"{{update_salary}}\",\r\n    \"age\": \"{{update_age}}\"\r\n}",
+					"raw": "{\r\n    \"name\": \"{{update_name}}\",\r\n    \"job\": \"{{update_job}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -115,13 +112,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/update/{{id}}",
+					"raw": "{{url}}/update/{{user_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"update",
-						"{{id}}"
+						"{{user_id}}"
 					]
 				}
 			},
@@ -134,13 +131,10 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
 							"});\r",
-							"\r",
-							"pm.test(\"Successful response\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"success\");\r",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -150,13 +144,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/delete/{{id}}",
+					"raw": "{{url}}/users/{{user_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"delete",
-						"{{id}}"
+						"users",
+						"{{user_id}}"
 					]
 				}
 			},

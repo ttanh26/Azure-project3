@@ -7,21 +7,18 @@
 	},
 	"item": [
 		{
-			"name": "Get All Employees Copy",
+			"name": "List Users",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful status returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.status).to.eql(\"success\");\r",
-							"});\r",
 							"\r",
-							"pm.test(\"Successful message returned\", function () {\r",
+							"var page_id = pm.environment.get('page_id');\r",
+							"\r",
+							"pm.test(\"Successful get all users\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\r",
-							"        \"Successfully! All records has been fetched.\");\r",
+							"    pm.expect(jsonData.page).to.eql(parseInt(page_id));\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -32,54 +29,40 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/employees",
+					"raw": "{{url}}/users?page={{page_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"employees"
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page_id}}"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Create Employee Copy",
+			"name": "Create Users",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful status returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.status).to.eql(\"success\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Successful message returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\r",
-							"        \"Successfully! Record has been added.\");\r",
-							"});\r",
-							"\r",
 							"var json = pm.response.json();\r",
-							"pm.environment.set(\"id\", json.data.id);\r",
 							"\r",
-							"pm.test(\"Successful message returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\r",
-							"        \"Successfully! Record has been added.\");\r",
-							"});\r",
-							"\r",
-							"var salary = pm.environment.get('salary');\r",
+							"var job = pm.environment.get('job');\r",
 							"var name = pm.environment.get('name');\r",
-							"var age = pm.environment.get('age');\r",
-							"pm.test(\"Successfully added Employee info\", function () {\r",
+							"pm.test(\"Successfully added new user \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.data).to.include(\r",
+							"    pm.expect(jsonData).to.include(\r",
 							"        {\r",
 							"            \"name\": name,\r",
-							"            \"salary\": salary,\r",
-							"            \"age\": age\r",
+							"            \"job\": job\r",
 							"        });\r",
 							"});"
 						],
@@ -92,7 +75,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"salary\": \"{{salary}}\",\r\n    \"age\": \"{{age}}\"\r\n}",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -100,45 +83,33 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/create",
+					"raw": "{{url}}/users",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"create"
+						"users"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Update Employee Copy",
+			"name": "Update User",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful status returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.status).to.eql(\"success\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Successful message returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\r",
-							"        \"Successfully! Record has been updated.\");\r",
-							"});\r",
-							"\r",
-							"var salary = pm.environment.get('update_salary');\r",
+							"var job = pm.environment.get('update_job');\r",
 							"var name = pm.environment.get('update_name');\r",
-							"var age = pm.environment.get('update_age');\r",
-							"pm.test(\"Successfully added Employee info\", function () {\r",
+							"\r",
+							"pm.test(\"Successfully update user info\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.data).to.include(\r",
+							"    pm.expect(jsonData).to.include(\r",
 							"        {\r",
 							"            \"name\": name,\r",
-							"            \"salary\": salary,\r",
-							"            \"age\": age\r",
+							"            \"job\": job\r",
 							"        });\r",
 							"});\r",
 							""
@@ -152,7 +123,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"{{update_name}}\",\r\n    \"salary\": \"{{update_salary}}\",\r\n    \"age\": \"{{update_age}}\"\r\n}",
+					"raw": "{\r\n    \"name\": \"{{update_name}}\",\r\n    \"job\": \"{{update_job}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -160,40 +131,29 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/update/{{id}}",
+					"raw": "{{url}}/update/{{user_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"update",
-						"{{id}}"
+						"{{user_id}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Delete Employee Copy",
+			"name": "Get Single User",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful status returned\", function () {\r",
+							"var id = pm.environment.get('user_id')\r",
+							"pm.test(\"Correct user info returned\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.status).to.eql(\"success\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Successful message returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\r",
-							"        \"Successfully! Record has been deleted\");\r",
-							"});\r",
-							"\r",
-							"var id = pm.environment.get('id')\r",
-							"pm.test(\"Successful message returned\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.data).to.eql(String(id));\r",
+							"    pm.expect(jsonData.data.id).to.eql(parseInt(id));\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -201,16 +161,16 @@
 				}
 			],
 			"request": {
-				"method": "DELETE",
+				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/delete/{{id}}",
+					"raw": "{{url}}/users/{{user_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"delete",
-						"{{id}}"
+						"users",
+						"{{user_id}}"
 					]
 				}
 			},
